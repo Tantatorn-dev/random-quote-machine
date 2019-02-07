@@ -3,17 +3,35 @@ import './App.css';
 import {  Grid, Button ,Transition} from 'semantic-ui-react'
 
 
-const quotes = ['I love dog', 'I love cat', 'I love Coca Cola','I love pepsi','google spaghetti'];
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      quotes:[],
       current_quote_index: 0,
       visible:true
     }
     this.handleClick = this.handleClick.bind(this);
     this.onAnimationComplete= this.onAnimationComplete.bind(this);
+  }
+
+  componentDidMount(){
+
+    fetch('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=40')
+    .then(res =>{
+      return res.json();
+    }).then(data=>{
+      let quote=[];
+      for(let i=0;i<40;i++){
+        quote=[...quote,data[i].title];
+      }
+      this.setState({
+        quotes: quote
+      })
+    })
+    
+
   }
 
   handleClick() {
@@ -37,7 +55,7 @@ class App extends Component {
           <Grid.Column style={{ maxWidth: 450 }}>
 
             <Transition  onHide={this.onAnimationComplete} visible={this.state.visible} animation='scale' duration={1000}>
-              <p style={{ color: 'white', fontSize: 28 }}>{quotes[this.state.current_quote_index]}</p>
+              <p style={{ color: 'white', fontSize: 28 }}>{this.state.quotes[this.state.current_quote_index]}</p>
             </Transition>
 
             <Button onClick={this.handleClick} content='New Quote' inverted color='standard' />
