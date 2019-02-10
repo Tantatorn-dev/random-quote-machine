@@ -63,17 +63,18 @@ class App extends Component {
           <Grid.Column style={{ maxWidth: 450 }}>
 
             
-
+            <div className='box'>
             <Transition onHide={this.onAnimationComplete} visible={this.state.visible} animation='scale' duration={1000}>
             <figure>
               <div className='quote' 
               dangerouslySetInnerHTML={{__html:someHtml}} 
-              style={{color: 'white', fontSize: 24}}/>
+              style={{color: 'white', fontSize: 24,fontFamily:'Roboto'}}/>
               <figcaption style={{color: 'white', fontSize: 22,paddingTop:20}}>{'  - '+this.state.authors[this.state.current_quote_index]}</figcaption>
             </figure>
             </Transition>
 
-            <Button onClick={this.handleClick} content='New Quote' inverted color='standard' />
+            <Button className='change-quote-button' onClick={this.handleClick} content='New Quote' colored color='red' />
+            </div>
 
           </Grid.Column>
         </Grid>
